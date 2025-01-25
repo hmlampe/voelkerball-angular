@@ -14,7 +14,7 @@
 </p>
 
 @for (group of groups; track $index) {
-    <p><label>{{group}}</label> <button (click)="removeGroup(group)">entfernen</button></p>
+    <p><button (click)="removeGroup(group)">entfernen</button><label>{{group}}</label></p>
 }
 
 <h2>Schiris</h2>
@@ -41,4 +41,4 @@
 <p>
     <label>Gesamte Spielzeit in Minuten: </label><label id="time_all"></label>
 </p>
-<app-game-mechanics/>
+<app-game-control/>

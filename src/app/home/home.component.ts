@@ -1,15 +1,16 @@
 import { Component, inject, signal } from '@angular/core';
 import { GreetingComponent } from '../components/greeting/greeting.component';
 import { NgFor } from '@angular/common';
-import { GameMechanicsComponent } from '../components/game-mechanics/game-mechanics.component';
+import { GameControlComponent } from '../components/game-control/game-control.component';
 import { TodosService } from '../services/todos.service';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../services/data.service';
-import { Group } from '../services/group';
+import { Group } from '../model/group';
+import { GameMechanicService } from '../services/game-mechanic.service';
 
 @Component({
   selector: 'app-home',
-  imports: [GreetingComponent, GameMechanicsComponent, NgFor],
+  imports: [GreetingComponent, GameControlComponent, NgFor],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -21,16 +22,15 @@ export class HomeComponent {
   game_time = signal<number>(5);
   break_time = signal<number>(3);
   groups: string[] = [];
+  g = signal<string[]>([]);
   group_objects: Group[] = [];
 
-  constructor(private dataService:DataService) {
-    this.dataService.getGroups().subscribe(data => {
-      console.log(data);
-      data.forEach(element => {
-        this.group_objects.push(element);
-      })
-      this.group_objects.forEach(group => this.groups.push(group.name))
-    });
+  constructor(private mechanics:GameMechanicService) {
+    this.getGroups();
+  }
+
+  async getGroups() {
+    this.groups = await this.mechanics.getGroupNames();
   }
 
   keyUpHandler(event: KeyboardEvent) {
@@ -53,22 +53,16 @@ export class HomeComponent {
     }
     else if (group != "") {
       this.groups.push(group);
-      let groupObj = new Group(group);
-      this.dataService.addGroup(groupObj).subscribe(data => console.log(data));
-      // let json = "{'group': '"+group+"'}"
-      // this.http.post("http://127.0.0.1:5000/control/add_group", json).subscribe(ret => {console.log("Return: ", ret)});
-      // let error = (<HTMLLabelElement>document.getElementById("error"));
-      // error.innerText = "";
-      this.dataService.getGroups().subscribe(data => console.log(data));
+      this.groups = this.mechanics.addGroup(group);
     }
     else {
       let error = (<HTMLLabelElement>document.getElementById("error"));
       error.innerText = "";
     }
   }
+
   removeGroup(group: string) {
-    const index = this.groups.indexOf(group);
-    this.groups.splice(index, 1);
+    this.groups = this.mechanics.removeGroup(group);
   }
 
   setMechanics() {
@@ -94,7 +88,7 @@ export class HomeComponent {
     // Gruppenphase
     let time_all = (games * Number(this.game_time())) + ((games-1) * Number(this.break_time()));
     // Halbfinale + Finale
-    time_all += (2 * (Number(this.game_time()) + Number(this.break_time())));
+    time_all += (3 * (Number(this.game_time()) + Number(this.break_time())));
     let time = <HTMLLabelElement>document.getElementById("time_all");
     time.innerText = String(time_all);
   }

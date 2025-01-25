@@ -11,7 +11,7 @@ export const routes: Routes = [
     {
         path: 'mechanics',
         loadComponent: () => {
-            return import('./components/game-mechanics/game-mechanics.component').then(m => m.GameMechanicsComponent)
+            return import('./components/game-control/game-control.component').then(m => m.GameControlComponent)
         }
     }
 ];
