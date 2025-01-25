@@ -1,5 +1,5 @@
 <!-- <p>home works!</p> -->
-<app-greeting [message]="'Hello 12345'" />
+<!-- <app-greeting [message]="'Hello 12345'" /> -->
 <!-- <input type="text" placeholder="type something..." (keyup)="keyUpHandler($event)">
 <p>Zähler: </p>
 <button (click)="countUp()">hoch</button>
@@ -8,25 +8,33 @@
 
 --- -->
 
+<h1>Gruppen und Schiedsrichter</h1>
+
 <h2>Gruppen:</h2>
 <p>
     <input type="text" id="addGroup" placeholder="Gruppe"><button (click)="addGroup()">hinzufügen</button>  <label style="color: red;" id="error"></label>
 </p>
 
 @for (group of groups; track $index) {
-    <p><button (click)="removeGroup(group)">entfernen</button><label>{{group}}</label></p>
+    <p><button (click)="removeGroup(group)">entfernen</button><label id="group">{{group}}</label></p>
 }
 
-<h2>Schiris</h2>
+<p><label>Gruppen insgesamt: {{groups.length}}</label></p>
+
+<hr/>
+
+<h2>Schiedsrichter</h2>
 <select id="my-menu">
     <option *ngFor="let entry of groups" value="entry.value">
     {{entry}}
     </option>
 </select>
 
+<hr/>
+
 <h2>Spielmechanik</h2>
 <p>
-    Anzahl Gruppen:
+    Anzahl Teams:
     <input id="team_count" type="number" min="0" step="1" placeholder="2"/>
 </p>
 <p>
@@ -37,8 +45,7 @@
     Pausenlänge in Minuten:
     <input id="break_time" type="number" min="0" step="1" placeholder="3"/>
 </p>
-<button (click)="setMechanics()">berechnen</button>
 <p>
+    <button (click)="setMechanics()">festlegen und berechnen:</button>
     <label>Gesamte Spielzeit in Minuten: </label><label id="time_all"></label>
 </p>
-<app-game-control/>

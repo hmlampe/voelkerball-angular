@@ -8,22 +8,26 @@ export class Group {
     points: number = 0;
     throwOuts: number = 0;
     drops: number = 0;
+    games: number = 0;
+    opponents: Group[] = [];
 
-    addPoints(points: number) {
+    private addPoints(points: number) {
         this.points += points;
     }
 
-    addThrowOuts(throwOuts: number) {
+    private addThrowOuts(throwOuts: number) {
         this.throwOuts += throwOuts;
     }
 
-    addDrops(drops: number) {
+    private addDrops(drops: number) {
         this.drops += drops;
     }
 
-    addGameResult(points: number, throwOuts: number, drops: number) {
+    addGameResult(opponent: Group, points: number, throwOuts: number, drops: number) {
         this.addPoints(points);
         this.addThrowOuts(throwOuts);
         this.addDrops(drops);
+        this.games++;
+        this.opponents.push(opponent);
     }
 }

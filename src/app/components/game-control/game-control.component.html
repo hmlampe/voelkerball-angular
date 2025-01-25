@@ -1,1 +1,12 @@
-<p>game-mechanics works!</p>
+<h1>Spielverlauf</h1>
+
+<h2>Teams</h2>
+
+@for (team of teams; track team; let i = $index) {
+    <h3>Team {{i+1}}</h3>
+    @for (group of team.groups; track $index) {
+        <p><label id="group">{{group.name}}</label><label>Punkte: {{group.points}}</label></p>
+    }
+}
+
+<app-game-course/>
