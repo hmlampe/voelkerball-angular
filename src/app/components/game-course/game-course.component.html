@@ -1,8 +1,15 @@
 <h2>Runden</h2>
 
+<p><button>Start</button></p>
+
 @for (team of teams; track $index; let i = $index) {
     <h3>Team {{i+1}}:</h3>
     @for (round of team.rounds; track $index; let j = $index) {
-        <p><label id="round">Runde {{j+1}}: {{round.player1.name}} gegen {{round.player2.name}}</label></p>
+        <p>
+            Runde {{j+1}}: <label id="group">{{round.player1.name}}</label> gegen <label id="group">{{round.player2.name}}</label>
+        </p>
+        <p>
+            <input id={{round.player1.name}} type="text" /><input id={{round.player2.name}} type="text"/><button (click)="round.addGame()">speichern</button>
+        </p>
     }
 }

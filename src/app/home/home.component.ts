@@ -27,10 +27,6 @@ export class HomeComponent {
     this.groups = await this.mechanics.getGroupNames();
   }
 
-  // keyUpHandler(event: KeyboardEvent) {
-  //   console.log(`typed something: ${event.key}`);
-  // }
-  
   addGroup() {
     let group = (<HTMLInputElement>document.getElementById("addGroup")).value;
     if (this.groups.indexOf(group) != -1) {

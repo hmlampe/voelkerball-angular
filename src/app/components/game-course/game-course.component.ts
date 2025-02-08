@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GameMechanicService } from '../../services/game-mechanic.service';
-import { Team } from '../../model/teams';
+import { Team } from '../../model/team';
 
 @Component({
   selector: 'app-game-course',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Group } from '../model/group';
-import { Team } from '../model/teams';
+import { Team } from '../model/team';
 import { DataService } from './data.service';
 
 @Injectable({
@@ -50,11 +50,11 @@ export class GameMechanicService {
   }
 
   removeGroup(group: string) {
-    this.groups.forEach(g => {
-      if (g.name == group) {
-        this.groups.slice(this.groups.indexOf(g, 1));
+    for(let i: number = 0; i < this.groups.length; i++) {
+      if(this.groups[i].name == group) {
+        this.groups.splice(i, 1);
       }
-    })
+    }
     let groups: string[] = []
     this.groups.forEach(group => groups.push(group.name))
     return groups
